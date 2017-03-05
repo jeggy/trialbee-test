@@ -37,18 +37,3 @@ build/
 *.swp
 *.vim
 
-.babelrc
-.editorconfig
-.eslintrc
-.gitattributes
-Procfile
-circle.yml
-client/
-database.sqlite
-graphql.config.json
-graphql.schema.json
-package.json
-public/
-server/
-webpack.config.js
-yarn.lock

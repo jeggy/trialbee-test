@@ -1,0 +1,15 @@
+@import '../variables.scss';
+
+.besideHeaderSmall{
+  font-size: 18px;
+  font-style: italic;
+}
+
+.whiteText{
+  color: $white !important;
+}
+
+.table{
+  width: 100%;
+  margin: 25px 0;
+}

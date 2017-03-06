@@ -22,7 +22,10 @@ export default class User extends React.Component {
         <Button colored onClick={() => {
           this.setState({dialog: !this.state.dialog});
         }} raised ripple className={styles.whiteText} >Add new User</Button>
-        <UserDialog show={this.state.dialog} viewer={this.props.viewer} handleState={() => {this.setState({dialog: !this.state.dialog})}} />
+        <UserDialog show={this.state.dialog}
+                    viewer={this.props.viewer}
+                    handleState={() => {this.setState({dialog: !this.state.dialog})}}
+        />
       </div>
     );
   }

@@ -39,8 +39,8 @@ export default mutationWithClientMutationId({
     }
   },
 
-  mutateAndGetPayload: async ({ id, name, address, email, age }) => {
-    const {type, dbId } = fromGlobalId(id);
+  mutateAndGetPayload: async ({ id: sentId, name, address, email, age }) => {
+    const { id } = fromGlobalId(sentId);
     await updateUser({dbId, name, address, email, age});
   }
 });

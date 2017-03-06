@@ -137,8 +137,12 @@ export default class UserDialog extends React.Component {
           </div>
         </DialogContent>
         <DialogActions>
-          <Button type='button' onClick={this.state.id ? this.handleUpdateUser : this.handleCreateUser}>{ this.state.id ? 'Update' : 'Create'}</Button>
-          <Button type='button' onClick={this.handleCloseDialog}>Cancel</Button>
+          <Button type='button' onClick={this.state.id ? this.handleUpdateUser : this.handleCreateUser}>
+            { this.state.id ? 'Update' : 'Create'}
+            </Button>
+          <Button type='button' onClick={this.handleCloseDialog}>
+            Cancel
+          </Button>
         </DialogActions>
       </Dialog>
     );

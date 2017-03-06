@@ -31,22 +31,18 @@ export default mutationWithClientMutationId({
     },
     deletedId: {
       type: GraphQLString,
-      resolve: (test, sentId) => {
-        console.log(test);
-        console.log('SentId:');
-        console.log(test.sentId);
-        return test.sentId;
+      resolve: (obj) => {
+        return obj.sentId;
       }
     }
   },
 
   mutateAndGetPayload: ({ id: sentId }) => {
     return new Promise(async (resolve, reject) => {
-      console.log('Deleting');
-      const {type, id } = fromGlobalId(sentId);
+      const { id } = fromGlobalId(sentId);
       let deleted = await deleteUser(id);
-      if(deleted)
-        resolve({deleted, sentId});
+      if(deleted === 1)
+        resolve({ sentId });
       else
         reject('User not found');
     });

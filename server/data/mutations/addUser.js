@@ -1,9 +1,8 @@
 import {mutationWithClientMutationId, cursorForObjectInConnection} from 'graphql-relay';
 import {GraphQLNonNull, GraphQLString, GraphQLInt} from 'graphql';
-import {getUser, addUser, getUsers, tmpUser} from '../loaders/UserLoader';
+import { addUser, getUsers, tmpUser} from '../loaders/UserLoader';
 import {userEdge} from '../connection/UserConnection';
 import ViewerType from '../types/ViewerType';
-import UserType from '../types/UserType';
 
 
 const addUserMutation = mutationWithClientMutationId({

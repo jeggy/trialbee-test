@@ -33,11 +33,7 @@ function updateUser(user) {
 }
 
 function deleteUser(id) {
-  return User.find({where: {id: id}}).then(function (user) {
-    if(!user) return null;
-    User.destroy({where: {id: id}});
-    return user;
-  });
+  return User.destroy({where: {id: id}});
 }
 
 export {

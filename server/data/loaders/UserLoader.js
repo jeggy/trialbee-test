@@ -27,9 +27,10 @@ function addUser(user) {
   return User.create(user)
 }
 
-// TODO: implement this
 function updateUser(user) {
-  return user;
+  return User.update(user, {where: {id: user.id}}).then(e => {
+    return User.find({where: {id : user.id}});
+  });
 }
 
 function deleteUser(id) {

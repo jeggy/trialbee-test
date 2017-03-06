@@ -1,6 +1,6 @@
 import React from 'react';
 import Relay from 'react-relay';
-import { Button, Dialog, DialogTitle, DialogContent, DialogActions, Textfield} from 'react-mdl';
+import { Button, Dialog, DialogTitle, DialogContent, DialogActions, Textfield, Snackbar } from 'react-mdl';
 import AddUserMutation from './mutations/AddUserMutation';
 import UpdateUserMutation from './mutations/UpdateUserMutation';
 
@@ -30,6 +30,8 @@ export default class UserDialog extends React.Component {
     this.ocAddress = this.ocAddress.bind(this);
     this.ocEmail = this.ocEmail.bind(this);
     this.ocAge = this.ocAge.bind(this);
+
+    this.handleShowSnackbar = this.handleShowSnackbar.bind(this);
   }
 
   set(k, v){
@@ -63,7 +65,8 @@ export default class UserDialog extends React.Component {
           if(!this.state.id) this.resetInput();
         },
         onFailure: (t) => {
-          console.log(t.getError());
+          this.handleShowSnackbar();
+          this.setState({message: t.getError().source.errors[0].message});
         }
       }
     );
@@ -89,12 +92,22 @@ export default class UserDialog extends React.Component {
     this.set('age', e.target.value);
   }
 
+  handleShowSnackbar() {
+    this.setState({ isSnackbarActive: true });
+  }
+
+
   render() {
     return (
       <Dialog open={this.props.show} style={{width: '400px'}}>
         <DialogTitle>{this.state.id ? 'Edit \'' + this.state.name +'\'' : 'Add new user'}</DialogTitle>
         <DialogContent>
           <div>
+            <Snackbar
+              active={!!this.state.isSnackbarActive}
+              onTimeout={() => this.setState({ isSnackbarActive: false })}>
+                {this.state.message}
+            </Snackbar>
             <Textfield
               floatingLabel
               onChange={this.ocName}

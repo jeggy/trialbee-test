@@ -23,13 +23,13 @@ const addUserMutation = mutationWithClientMutationId({
   },
 
   outputFields: {
-    userEdge: {
-      type: userEdge,
-      resolve: async (obj) => {
-        const cursorId = cursorForObjectInConnection(await getUsers(), obj);
-        return { node: obj, cursor: cursorId };
-      }
-    },
+    // userEdge: {
+    //   type: userEdge,
+    //   resolve: async (obj) => {
+    //     const cursorId = cursorForObjectInConnection(await getUsers(), obj);
+    //     return { node: obj, cursor: cursorId };
+    //   }
+    // },
     viewer: {
       type: ViewerType,
       resolve: () => tmpUser

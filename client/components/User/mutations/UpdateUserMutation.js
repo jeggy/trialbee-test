@@ -21,7 +21,7 @@ class UpdateUserMutation extends Relay.Mutation {
   getFatQuery() {
     return Relay.QL`
       fragment on UpdateUserPayload {
-        userEdge,
+#        userEdge,
         viewer { users },
         updatedUser
       }

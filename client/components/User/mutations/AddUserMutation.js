@@ -20,7 +20,7 @@ class AddUserMutation extends Relay.Mutation {
   getFatQuery() {
     return Relay.QL`
       fragment on AddUserPayload {
-        userEdge,
+#        userEdge,
         viewer { users }
         
       }

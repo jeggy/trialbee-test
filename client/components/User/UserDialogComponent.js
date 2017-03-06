@@ -2,6 +2,7 @@ import React from 'react';
 import Relay from 'react-relay';
 import { Button, Dialog, DialogTitle, DialogContent, DialogActions, Textfield} from 'react-mdl';
 import AddUserMutation from './mutations/AddUserMutation';
+import UpdateUserMutation from './mutations/UpdateUserMutation';
 
 export default class UserDialog extends React.Component {
 
@@ -23,8 +24,7 @@ export default class UserDialog extends React.Component {
 
     this.handleOpenDialog = this.handleOpenDialog.bind(this);
     this.handleCloseDialog = this.handleCloseDialog.bind(this);
-    this.handleCreateUser = this.handleCreateUser.bind(this);
-    this.handleUpdateUser = this.handleUpdateUser.bind(this);
+    this.handleSave = this.handleSave.bind(this);
 
     this.ocName = this.ocName.bind(this);
     this.ocAddress = this.ocAddress.bind(this);
@@ -46,11 +46,12 @@ export default class UserDialog extends React.Component {
     this.props.handleState(false);
   }
 
-  handleCreateUser() {
-    console.log(this.state);
+  handleSave(update) {
+    let MutationType = update ? UpdateUserMutation : AddUserMutation;
     Relay.Store.commitUpdate(
-      new AddUserMutation({
+      new MutationType({
         viewerId: this.props.viewer.id,
+        id: this.state.id,
         name: this.state.name,
         address: this.state.address,
         email: this.state.email,
@@ -65,11 +66,6 @@ export default class UserDialog extends React.Component {
         }
       }
     );
-  }
-
-  handleUpdateUser(){
-    console.log(this.state);
-    console.log('Update user not implement on frontend yet.');
   }
 
   resetInput(){
@@ -137,7 +133,7 @@ export default class UserDialog extends React.Component {
           </div>
         </DialogContent>
         <DialogActions>
-          <Button type='button' onClick={this.state.id ? this.handleUpdateUser : this.handleCreateUser}>
+          <Button type='button' onClick={() => this.handleSave(!!this.state.id)}>
             { this.state.id ? 'Update' : 'Create'}
             </Button>
           <Button type='button' onClick={this.handleCloseDialog}>

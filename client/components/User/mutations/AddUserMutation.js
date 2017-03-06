@@ -28,7 +28,6 @@ class AddUserMutation extends Relay.Mutation {
   }
 
   getConfigs() {
-    console.log(this.props);
     return [{
       type: 'RANGE_ADD',
       parentName: 'viewer',

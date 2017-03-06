@@ -1,6 +1,6 @@
 /* eslint-disable global-require */
 import React from 'react';
-import { Button, Checkbox, Slider } from 'react-mdl';
+import { Button, Dialog, DialogTitle, DialogContent, DialogActions, Checkbox, Slider } from 'react-mdl';
 import Page from '../Page/PageComponent';
 import AddUser from './AddUserComponent';
 import styles from './User.scss';
@@ -15,7 +15,8 @@ export default class User extends React.Component {
     this.state = {
       selected: [],
       overAge: false,
-      currentDialog: false
+      currentDialog: false,
+      warningDialog: false
     };
   }
   static propTypes = {
@@ -56,11 +57,30 @@ export default class User extends React.Component {
       );
     }
     if(this.state.selected.length > 0){
+
       c = (
         <span className={styles.besideHeaderSmall}>
           {this.state.selected.length} Selected&nbsp;&nbsp;&nbsp;
-          <Button raised accent ripple onClick={() => this.deleteSelected()}>Delete</Button>
+          <Button raised accent ripple onClick={() => this.setState({warningDialog: true})}>Delete</Button>
           &nbsp;&nbsp;{c}
+
+          <Dialog open={this.state.warningDialog}>
+          <DialogTitle>Delete {this.state.selected.length > 1 ? 'users' : 'user'}?</DialogTitle>
+          <DialogContent>
+            <p>You sure you want to delete {this.state.selected.length} users?.</p>
+          </DialogContent>
+          <DialogActions>
+            <Button raised accent ripple type='button'
+                    onClick={() => {
+                      this.setState({warningDialog: false});
+                      this.deleteSelected();}
+                    }>Delete</Button>
+            <Button raised type='button'
+                    onClick={() =>
+                      this.setState({warningDialog: false})
+                    }>Cancel</Button>
+          </DialogActions>
+        </Dialog>
         </span>
       );
     }

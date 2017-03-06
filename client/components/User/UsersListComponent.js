@@ -1,10 +1,9 @@
 import React from 'react';
 import { Grid, Cell, DataTable, TableHeader} from 'react-mdl';
-import Relay from 'react-relay';
 import UserDialog from './UserDialogComponent';
 import s from './User.scss';
 
-class UsersListComponent extends React.Component {
+export default class UsersListComponent extends React.Component {
 
   constructor(args){
     super(args);
@@ -19,11 +18,12 @@ class UsersListComponent extends React.Component {
   };
 
   render() {
+
     return (
       <div>
         <DataTable
           selectable sortable shadow={2}
-          className={s.table} rowKeyColumn="_id"
+          className={s.table} rowKeyColumn="id"
           rows={this.props.users.edges.map(u => u.node)}
           onSelectionChanged={this.props.rowSelected}
         >
@@ -34,9 +34,9 @@ class UsersListComponent extends React.Component {
         </DataTable>
         {this.props.users.edges.map(edge => {
           return (
-            <UserDialog key={edge.node._id} show={edge.node._id == this.props.show}
+            <UserDialog key={edge.node.id} show={edge.node.id == this.props.show}
                         viewer={this.props.viewer}
-                        handleState={state => {this.props.dialogShow(edge.node._id, state);}}
+                        handleState={state => {this.props.dialogShow(edge.node.id, state);}}
                         user={edge.node} />
           );
         })}
@@ -45,21 +45,4 @@ class UsersListComponent extends React.Component {
   }
 }
 
-export default Relay.createContainer(UsersListComponent, {
-  fragments: {
-    users: () => Relay.QL`      
-      fragment on UserConnection{
-        edges{
-          node{
-            id
-            _id
-            name
-            address
-            email
-            age
-          }
-        }
-      }
-    `,
-  },
-});
+

@@ -1,24 +1,27 @@
-import {mutationWithClientMutationId, cursorForObjectInConnection} from 'graphql-relay';
+import {mutationWithClientMutationId, cursorForObjectInConnection, fromGlobalId} from 'graphql-relay';
 import {GraphQLNonNull, GraphQLString, GraphQLInt} from 'graphql';
 import {updateUser, getUsers, tmpUser} from '../loaders/UserLoader';
 import {userEdge} from '../connection/UserConnection';
 import ViewerType from '../types/ViewerType';
 
 
-const addUserMutation = mutationWithClientMutationId({
-  name: 'AddUser',
+export default mutationWithClientMutationId({
+  name: 'UpdateUser',
   inputFields: {
-    name: {
+    id: {
       type: new GraphQLNonNull(GraphQLString)
+    },
+    name: {
+      type: GraphQLString
     },
     address: {
       type: GraphQLString
     },
     email: {
-      type: new GraphQLNonNull(GraphQLString)
+      type: GraphQLString
     },
     age: {
-      type: new GraphQLNonNull(GraphQLInt)
+      type: GraphQLInt
     }
   },
 
@@ -36,8 +39,8 @@ const addUserMutation = mutationWithClientMutationId({
     }
   },
 
-  mutateAndGetPayload: async ({ id, name, address, email, age }) => await updateUser(
-    {id, name, address, email, age})
+  mutateAndGetPayload: async ({ id, name, address, email, age }) => {
+    const {type, dbId } = fromGlobalId(id);
+    await updateUser({dbId, name, address, email, age});
+  }
 });
-
-export default addUserMutation;

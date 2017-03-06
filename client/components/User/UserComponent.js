@@ -4,9 +4,9 @@ import { Button, Checkbox } from 'react-mdl';
 import Page from '../Page/PageComponent';
 import AddUser from './AddUserComponent';
 import styles from './User.scss';
-import DeleteUserMutation from './DeleteUserMutation';
+import DeleteUserMutation from './mutations/DeleteUserMutation';
 import Relay from 'react-relay';
-import UsersListComponent from './UsersListComponent';
+import UsersListComponent from './containers/UsersListContainer';
 
 
 export default class User extends React.Component {
@@ -26,7 +26,7 @@ export default class User extends React.Component {
     this.state.selected.forEach(function(id) {
       Relay.Store.commitUpdate(
         new DeleteUserMutation({
-          _id: id,
+          id: id,
         }), {
           onSuccess: () => {
             console.log('Deleted!');
@@ -40,8 +40,8 @@ export default class User extends React.Component {
     });
   }
 
-  toggleOverAge(){
-    this.setState({overAge: !this.state.overAge});
+  toggleOverAge(checked){
+    this.props.relay.setVariables({age: checked ? 30 : 0});
   }
 
   headingLeft(){
@@ -66,19 +66,20 @@ export default class User extends React.Component {
   }
 
   render() {
+
     return (
       <div>
         <Page heading='Users' headingLeft={this.headingLeft()} headingRight={<AddUser viewer={this.props.viewer} />}>
 
           <Checkbox
             value={this.state.overAge}
-            onChange={() => this.toggleOverAge()}
+            onChange={(e) => this.toggleOverAge(e.target.checked)}
             label={'Only show people over the age 30'} />
           <UsersListComponent
             users={this.props.viewer.users}
             viewer={this.props.viewer}
             selected={this.state.selected}
-            rowSelected={selected => {this.setState({selected});}}
+            rowSelected={selected => {console.log(selected); this.setState({selected});}}
             show={this.state.currentDialog}
             dialogShow={(id, state) => {this.setState({currentDialog: state ? id : false})}}
             />
@@ -86,4 +87,4 @@ export default class User extends React.Component {
       </div>
     );
   }
-}
+};

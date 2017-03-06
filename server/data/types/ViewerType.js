@@ -16,8 +16,8 @@ export default new GraphQLObjectType({
           type: GraphQLInt
         }
       },
-      resolve: (_, args) => connectionFromPromisedArray(getUsers(args).map(u => Object.assign(u, {_id: u.id})), args)
+      resolve: (_, args) => connectionFromPromisedArray(getUsers(args), args)
     }
   }),
-  interfaces: [nodeInterface]
+  interfaces: () => [nodeInterface]
 });

@@ -15,7 +15,7 @@
   "pre-commit": "lint",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lvarayut/relay-fullstack.git"
+    "url": "git+https://github.com/jeggy/trialbee-test.git"
   },
   "engines": {
     "node": "6.6.0",
@@ -38,7 +38,7 @@
   ],
   "author": "Jógvan Olsen",
   "license": "MIT",
-  "homepage": "https://github.com/jeggy/trialbee-test",
+  "homepage": "https://github.com/jeggy",
   "devDependencies": {
     "eslint": "^3.12.2",
     "eslint-config-airbnb": "^13.0.0",
@@ -49,7 +49,8 @@
     "pre-commit": "^1.2.2",
     "react-transform-catch-errors": "^1.0.2",
     "react-transform-hmr": "^1.0.4",
-    "redbox-react": "^1.3.3"
+    "redbox-react": "^1.3.3",
+    "sequelize-relay": "^1.0.2"
   },
   "dependencies": {
     "autoprefixer": "^6.6.1",

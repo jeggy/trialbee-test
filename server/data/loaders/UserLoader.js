@@ -10,7 +10,7 @@ const tmpUser = {
 };
 
 function getUser(id) {
-  return tmpUser; // User.find({where: {id: id}});
+  return User.find({where: {id: id}});
 }
 
 function getUsers(search) {

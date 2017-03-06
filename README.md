@@ -1,4 +1,5 @@
 # Trialbee 
+This is 
 
 ## Installation
 ```
@@ -12,5 +13,6 @@ give it a minute or two to startup.<br>
 Then just open [http://localhost:3000](http://localhost:3000 "Title")
 
 ## Requirements
-npm<br>
-node > v6
+* git
+* npm
+* node >= v6

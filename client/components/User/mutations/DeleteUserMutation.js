@@ -10,7 +10,7 @@ class DeleteUserMutation extends Relay.Mutation {
 
   getVariables() {
     return {
-      _id: this.props._id,
+      id: this.props.id,
     };
   }
 

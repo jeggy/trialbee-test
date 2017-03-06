@@ -1,8 +1,9 @@
 import {nodeDefinitions, fromGlobalId} from 'graphql-relay';
 
 import User from './models/User';
-import {getUser} from './loaders/UserLoader';
+import {getUser, tmpUser} from './loaders/UserLoader';
 import UserType from './types/UserType';
+import ViewerType from './types/ViewerType';
 
 /**
  * We get the node interface and field from the Relay library.
@@ -11,20 +12,24 @@ import UserType from './types/UserType';
  * The second defines the way we resolve an object to its GraphQL type.
  */
 const { nodeInterface, nodeField } = nodeDefinitions(
-  (globalId) => {
+  async (globalId) => {
     const { type, id } = fromGlobalId(globalId);
-    if (type === 'User') {
-      console.log('AWEF');
-      return getUser(id);
+    switch (type){
+      case 'User':
+        return await getUser(id);
+      case 'Viewer':
+        return tmpUser;
+      default:
+        return null;
     }
-    return null;
   },
   (obj) => {
-    if (obj instanceof User) {
+    if (obj instanceof User.Instance) {
       return UserType;
     }
-    return null;
+    // TODO:
+    return ViewerType;
   }
 );
 
-export {nodeInterface,nodeField};
+export {nodeInterface, nodeField};

@@ -1,7 +1,7 @@
 import React from 'react';
 import Relay from 'react-relay';
 import { Button, Dialog, DialogTitle, DialogContent, DialogActions, Textfield} from 'react-mdl';
-import AddUserMutation from './AddUserMutation';
+import AddUserMutation from './mutations/AddUserMutation';
 
 export default class UserDialog extends React.Component {
 
@@ -15,10 +15,10 @@ export default class UserDialog extends React.Component {
   constructor(props) {
     super(props);
 
-    if(props.user && props.user._id){
+    if(props.user && props.user.id){
       this.state = props.user;
     }else{
-      this.state = {_id: '', name: '', address: '', email: '', age: ''};
+      this.state = {id: '', name: '', address: '', email: '', age: ''};
     }
 
     this.handleOpenDialog = this.handleOpenDialog.bind(this);
@@ -94,7 +94,7 @@ export default class UserDialog extends React.Component {
   render() {
     return (
       <Dialog open={this.props.show} style={{width: '400px'}}>
-        <DialogTitle>{this.state._id ? 'Edit \'' + this.state.name +'\'' : 'Add new user'}</DialogTitle>
+        <DialogTitle>{this.state.id ? 'Edit \'' + this.state.name +'\'' : 'Add new user'}</DialogTitle>
         <DialogContent>
           <div>
             <Textfield
@@ -136,7 +136,7 @@ export default class UserDialog extends React.Component {
           </div>
         </DialogContent>
         <DialogActions>
-          <Button type='button' onClick={this.state._id ? this.handleUpdateUser : this.handleCreateUser}>{ this.state._id ? 'Update' : 'Create'}</Button>
+          <Button type='button' onClick={this.state.id ? this.handleUpdateUser : this.handleCreateUser}>{ this.state.id ? 'Update' : 'Create'}</Button>
           <Button type='button' onClick={this.handleCloseDialog}>Cancel</Button>
         </DialogActions>
       </Dialog>

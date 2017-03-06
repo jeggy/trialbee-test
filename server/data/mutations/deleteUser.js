@@ -1,4 +1,4 @@
-import {mutationWithClientMutationId, cursorForObjectInConnection, mutati, connectionFromPromisedArray, fromGlobalId} from 'graphql-relay';
+import {mutationWithClientMutationId, cursorForObjectInConnection, toGlobalId, connectionFromPromisedArray, fromGlobalId} from 'graphql-relay';
 import {GraphQLNonNull, GraphQLString, GraphQLBoolean, GraphQLObjectType, GraphQLInt} from 'graphql';
 import {tmpUser, deleteUser, getUsers} from '../loaders/UserLoader';
 import ViewerType from '../types/ViewerType';
@@ -31,11 +31,11 @@ export default mutationWithClientMutationId({
     },
     deletedId: {
       type: GraphQLString,
-      resolve: (test, test2, test3) => {
+      resolve: (test, sentId) => {
         console.log(test);
-        console.log(test2);
-        console.log(test3);
-        return "TODO: return the id";
+        console.log('SentId:');
+        console.log(test.sentId);
+        return test.sentId;
       }
     }
   },
@@ -44,8 +44,9 @@ export default mutationWithClientMutationId({
     return new Promise(async (resolve, reject) => {
       console.log('Deleting');
       const {type, id } = fromGlobalId(sentId);
-      if((await deleteUser(id)) == 1)
-        resolve(tmpUser);
+      let deleted = await deleteUser(id);
+      if(deleted)
+        resolve({deleted, sentId});
       else
         reject('User not found');
     });

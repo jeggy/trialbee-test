@@ -3,6 +3,7 @@ import {GraphQLNonNull, GraphQLString, GraphQLInt} from 'graphql';
 import {getUser, addUser, getUsers, tmpUser} from '../loaders/UserLoader';
 import {userEdge} from '../connection/UserConnection';
 import ViewerType from '../types/ViewerType';
+import UserType from '../types/UserType';
 
 
 const addUserMutation = mutationWithClientMutationId({
@@ -26,7 +27,7 @@ const addUserMutation = mutationWithClientMutationId({
     userEdge: {
       type: userEdge,
       resolve: async (obj) => {
-        const cursorId = cursorForObjectInConnection(await getUsers(obj), obj);
+        const cursorId = cursorForObjectInConnection(await getUsers(), obj);
         return { node: obj, cursor: cursorId };
       }
     },

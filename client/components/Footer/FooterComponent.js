@@ -8,7 +8,7 @@ export default class Footer extends React.Component {
     return (
       <MDLFooter className={styles.root} size='mini'>
         <FooterSection type='middle'>
-          <span>Jógvan Olsen - <a href="https://github.com/jeggy">GitHub</a></span>
+          <span>Jógvan Olsen - <a href="https://github.com/jeggy/trialbee-test" target="_blank">GitHub</a></span>
         </FooterSection>
       </MDLFooter>
     );

@@ -9,7 +9,8 @@ export default Relay.createContainer(User, {
   fragments: {
     viewer: () => Relay.QL`
       fragment on Viewer {
-        users(first: 20, age: $age) {
+        id
+        users(first: 100, age: $age) {
           ${UsersListContainer.getFragment('users')}
         }
       }`

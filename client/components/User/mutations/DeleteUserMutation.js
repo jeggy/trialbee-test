@@ -17,20 +17,22 @@ class DeleteUserMutation extends Relay.Mutation {
   getFatQuery() {
     return Relay.QL`
       fragment on DeleteUserPayload {
-        userEdge,
+        deletedId,
         viewer { users }
       }
     `;
   }
 
   getConfigs() {
+    console.log(this.props);
+    console.log('getConfigs -DeleteUserMutation');
     return [{
       type: 'RANGE_DELETE',
       parentName: 'viewer',
       parentID: this.props.viewerId,
-      pathToConnection: 'users',
       connectionName: 'users',
       deletedIDFieldName: 'deletedId',
+      pathToConnection: ['viewer', 'users'],
     }];
   }
 }

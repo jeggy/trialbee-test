@@ -1,6 +1,6 @@
 /* eslint-disable global-require */
 import React from 'react';
-import { Button, Checkbox } from 'react-mdl';
+import { Button, Checkbox, Slider } from 'react-mdl';
 import Page from '../Page/PageComponent';
 import AddUser from './AddUserComponent';
 import styles from './User.scss';
@@ -23,13 +23,16 @@ export default class User extends React.Component {
   };
 
   deleteSelected(){
+    const viewerId = this.props.viewer.id;
+
     this.state.selected.forEach(function(id) {
       Relay.Store.commitUpdate(
         new DeleteUserMutation({
           id: id,
+          viewerId: viewerId
         }), {
-          onSuccess: () => {
-            console.log('Deleted!');
+          onSuccess: (deletedUser) => {
+            console.log('User deleted!');
           },
           onFailure: (t) => {
             console.log('Failed');
@@ -70,7 +73,6 @@ export default class User extends React.Component {
     return (
       <div>
         <Page heading='Users' headingLeft={this.headingLeft()} headingRight={<AddUser viewer={this.props.viewer} />}>
-
           <Checkbox
             value={this.state.overAge}
             onChange={(e) => this.toggleOverAge(e.target.checked)}
@@ -79,7 +81,7 @@ export default class User extends React.Component {
             users={this.props.viewer.users}
             viewer={this.props.viewer}
             selected={this.state.selected}
-            rowSelected={selected => {console.log(selected); this.setState({selected});}}
+            rowSelected={selected => this.setState({selected})}
             show={this.state.currentDialog}
             dialogShow={(id, state) => {this.setState({currentDialog: state ? id : false})}}
             />

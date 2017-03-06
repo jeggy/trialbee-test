@@ -50,6 +50,7 @@ export default class UserDialog extends React.Component {
     console.log(this.state);
     Relay.Store.commitUpdate(
       new AddUserMutation({
+        viewerId: this.props.viewer.id,
         name: this.state.name,
         address: this.state.address,
         email: this.state.email,

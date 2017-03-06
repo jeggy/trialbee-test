@@ -28,6 +28,20 @@ class UpdateUserMutation extends Relay.Mutation {
     `;
   }
 
+  getOptimisticResponse(){
+    return {
+      story: {
+        updatedUser: {
+          id: this.props.id,
+          name: this.props.name,
+          address: this.props.address,
+          email: this.props.email,
+          age: this.props.age
+        },
+      },
+    };
+  }
+
   getConfigs() {
     return [{
       type: 'FIELDS_CHANGE',

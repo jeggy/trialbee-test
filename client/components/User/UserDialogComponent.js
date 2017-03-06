@@ -59,7 +59,8 @@ export default class UserDialog extends React.Component {
       }), {
         onSuccess: () => {
           this.props.handleState(false);
-          this.resetInput();
+          console.log(this.state.id);
+          if(!this.state.id) this.resetInput();
         },
         onFailure: (t) => {
           console.log(t.getError());
